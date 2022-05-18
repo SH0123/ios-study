@@ -19,8 +19,7 @@ struct ContentView: View {
                         CardView(emoji: emoji)
                             .aspectRatio(2/3, contentMode: .fit)
                     }
-
-            }
+                }
             }
             .padding(.horizontal)
             .foregroundColor(.red)

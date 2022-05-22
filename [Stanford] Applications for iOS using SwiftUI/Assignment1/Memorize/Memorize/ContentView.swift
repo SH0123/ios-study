@@ -14,11 +14,11 @@ struct ContentView: View {
             String(emoji)
         }.shuffled()
 
-    
+    @State private var isPresented = false
     var body: some View {
         VStack{
             Text("Memorize!").font(.largeTitle)
-            ScrollView{
+            GeometryReader { proxy in
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]){
                     ForEach(emojis[0..<emojiCount], id: \.self){emoji in
                         CardView(emoji: emoji)
@@ -28,15 +28,13 @@ struct ContentView: View {
             }
             .padding(.horizontal)
             .foregroundColor(.red)
-            Spacer()
             HStack{
-                Spacer()
                 firstButton
-                Spacer()
+                    .frame(maxWidth: .infinity)
                 secondButton
-                Spacer()
+                    .frame(maxWidth: .infinity)
                 thirdButton
-                Spacer()
+                    .frame(maxWidth: .infinity)
             }
             .padding(.horizontal)
         }
@@ -133,5 +131,7 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
             .previewInterfaceOrientation(.portrait)
+        ContentView()
+            .previewInterfaceOrientation(.landscapeLeft)
     }
 }

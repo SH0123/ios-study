@@ -17,7 +17,7 @@ struct ContentView: View {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]){
                     ForEach(viewModel.cards){card in
                         CardView(card: card)
-                            .aspectRatio(2/3, contentMode: .fit)
+                            .aspectRatio(2/3, contentMode: .fit) 
                             .onTapGesture {
                                 viewModel.choose(card: card)
                             }
@@ -43,7 +43,10 @@ struct CardView: View{
                 shape.fill(.white)
                 shape.strokeBorder(lineWidth: 3)
                 Text(card.content).font(.largeTitle)
-            }else{
+            }else if card.isMatched{
+                shape.opacity(0)
+            }
+            else{
                 shape.fill()
             }
             

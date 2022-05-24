@@ -21,7 +21,8 @@ struct MemoryGame<CardContent> where CardContent: Equatable{
                     cards[chosenIndex].isMatched = true
                 }
                 indexOfTheOneAndOnlyFaceUpCard = nil
-                            }else{
+                print("hello ")
+            }else{
                 for index in cards.indices{
                     cards[index].isFaceUp = false
                 }

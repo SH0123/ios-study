@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct MemoryGame<Content> where Content: Equatable{
     
@@ -23,7 +24,24 @@ struct MemoryGame<Content> where Content: Equatable{
     }
     
     mutating func choose(card: Card){
-        
+        if let chosenIndex = cards.firstIndex(where: {cardInCards in
+            cardInCards.id == card.id
+        } ), !cards[chosenIndex].isMatched, !cards[chosenIndex].isFaceUp{
+            if let potentialMatchedIndex = indexOfTheOneAndOnlyFaceUpCard{
+                if cards[potentialMatchedIndex].content == cards[chosenIndex].content{
+                    cards[potentialMatchedIndex].isMatched = true
+                    cards[chosenIndex].isMatched = true
+                }
+                indexOfTheOneAndOnlyFaceUpCard = nil
+            }else{
+                for index in cards.indices{
+                    cards[index].isFaceUp = false
+                }
+                indexOfTheOneAndOnlyFaceUpCard = chosenIndex
+                
+            }
+            cards[chosenIndex].isFaceUp.toggle()
+        }
     }
     
     
@@ -43,4 +61,21 @@ enum Theme: String{
     case animal = "🐶🐱🐭🐹🐰🦊🐻🐼🐻‍❄️🐨"
     case emotion = "😃😂☺️🥰😙😝🤩🥳😡🤯🥶🫥😵‍💫"
     case flag = "🇬🇭🇬🇱🇬🇷🇳🇬🇳🇱🇳🇴🇳🇮🇰🇷🇩🇰🇩🇪🇲🇨🇲🇽🇻🇳🇸🇴"
+    
+    func colorType() -> Color{
+        switch self{
+        case .fruit:
+            return .red
+        case .food:
+            return .yellow
+        case .transportation:
+            return .blue
+        case .animal:
+            return .green
+        case .emotion:
+            return .black
+        default:
+            return .purple
+        }
+    }
 }

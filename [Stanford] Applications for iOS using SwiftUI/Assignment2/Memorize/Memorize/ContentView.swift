@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var viewModel = ViewModel(numberOfPairsOfCards: randPairNum(), theme: randTheme())
+    static let pairNum: Int = randPairNum()
+    static let theme: Theme = randTheme()
+    @ObservedObject var viewModel = ViewModel(numberOfPairsOfCards: pairNum, theme: theme)
+    
     var body: some View {
         VStack{
             ScrollView{
@@ -23,7 +26,7 @@ struct ContentView: View {
                 }
             }
             .padding(.horizontal)
-            .foregroundColor(.red)
+            .foregroundColor(ContentView.theme.colorType())
             Spacer()
         }
     }

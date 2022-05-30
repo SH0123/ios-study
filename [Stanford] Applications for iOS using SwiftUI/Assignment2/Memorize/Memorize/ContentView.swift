@@ -8,12 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
-    static let pairNum: Int = randPairNum()
-    static let theme: Theme = randTheme()
-    @ObservedObject var viewModel = ViewModel(numberOfPairsOfCards: pairNum, theme: theme)
+    //상단에서 초기화 할 수 있도록
+    @ObservedObject var viewModel: ViewModel
     
     var body: some View {
         VStack{
+            HStack{
+                Button(action:{
+                    viewModel.newGame()
+                }){
+                    Text("new game")
+                }
+                Spacer()
+                Text(viewModel.title)
+                Spacer()
+                Text("\(viewModel.score)")
+            }
             ScrollView{
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]){
                     ForEach(viewModel.cards){card in
@@ -25,19 +35,10 @@ struct ContentView: View {
                     }
                 }
             }
-            .padding(.horizontal)
-            .foregroundColor(ContentView.theme.colorType())
+            .foregroundColor(viewModel.color)
             Spacer()
         }
-    }
-    
-    static func randPairNum() -> Int{
-        return Int.random(in: 4..<30)
-    }
-    
-    static func randTheme() -> Theme{
-        let themes: [Theme] = [Theme.fruit, Theme.food, Theme.transportation, Theme.animal, Theme.emotion, Theme.flag]
-        return themes[Int.random(in : 0..<themes.count)]
+        .padding(.horizontal)
     }
 }
 
@@ -63,9 +64,9 @@ struct CardView: View{
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(viewModel: ViewModel())
             .previewInterfaceOrientation(.portrait)
-        ContentView()
+        ContentView(viewModel: ViewModel())
             .previewInterfaceOrientation(.landscapeLeft)
     }
 }

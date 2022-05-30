@@ -12,6 +12,7 @@ struct MemoryGame<Content> where Content: Equatable{
     
     private(set) var cards: [Card]
     private var indexOfTheOneAndOnlyFaceUpCard: Int?
+    private(set) var score: Int = 0
     
     init(numberOfPairsOfCards: Int, createCardContent: (Int) -> Content){
         cards = []
@@ -31,6 +32,13 @@ struct MemoryGame<Content> where Content: Equatable{
                 if cards[potentialMatchedIndex].content == cards[chosenIndex].content{
                     cards[potentialMatchedIndex].isMatched = true
                     cards[chosenIndex].isMatched = true
+                    score += 2
+                }
+                else{
+                    score = cards[potentialMatchedIndex].seen ? score - 1 : score
+                    score = cards[chosenIndex].seen ? score - 1 : score
+                    cards[potentialMatchedIndex].seen = true
+                    cards[chosenIndex].seen = true
                 }
                 indexOfTheOneAndOnlyFaceUpCard = nil
             }else{
@@ -74,8 +82,29 @@ enum Theme: String{
             return .green
         case .emotion:
             return .black
-        default:
+        case .flag:
             return .purple
+        default:
+            break
+        }
+    }
+    
+    func themeName() -> String{
+        switch self{
+        case .fruit:
+            return "Fruit"
+        case .food:
+            return "Food"
+        case .transportation:
+            return "Transportation"
+        case .animal:
+            return "Animal"
+        case .emotion:
+            return "Emotion"
+        case .flag:
+            return "Flag"
+        default:
+            break
         }
     }
 }

@@ -19,10 +19,13 @@ struct ContentView: View {
                 }){
                     Text("new game")
                 }
+                .frame(maxWidth: .infinity)
                 Spacer()
                 Text(viewModel.title)
+                    .frame(maxWidth: .infinity)
                 Spacer()
                 Text("\(viewModel.score)")
+                    .frame(maxWidth: .infinity)
             }
             ScrollView{
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]){

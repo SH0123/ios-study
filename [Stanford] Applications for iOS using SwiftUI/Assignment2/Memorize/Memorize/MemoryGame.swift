@@ -84,8 +84,6 @@ enum Theme: String{
             return .black
         case .flag:
             return .purple
-        default:
-            break
         }
     }
     
@@ -103,8 +101,6 @@ enum Theme: String{
             return "Emotion"
         case .flag:
             return "Flag"
-        default:
-            break
         }
     }
 }
